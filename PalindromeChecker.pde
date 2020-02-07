@@ -1,39 +1,11 @@
 public void setup()
 {
   String lines[] = loadStrings("palindromes.txt");
-  String allLettersLines[] = new String[lines.length];
-  String noSpacesLines[] = new String[lines.length];
-  String finalLines[] = new String[lines.length];
   println("there are " + lines.length + " lines");
-
-  //making line all letters  
-  for (int i = 0; i<lines.length; i++) {
-    for (int u =0; u<lines[i].length(); u++) {
-      if (Character.isLetter(lines[i].charAt(u))==true) {
-        allLettersLines[i] = allLettersLines[i] + lines[i].charAt(u);
-      }
-    }
-  }  
-
-  //removing spaces  
-  for (int i = 0; i<lines.length; i++) {  
-    for (int o=0; o<allLettersLines[i].length(); i++) {
-      if (allLettersLines[i].charAt(o)!=' ') {
-        noSpacesLines[i] = noSpacesLines[i] + allLettersLines[i].charAt(o);
-      }
-    }
-  }
-
-  //making everything lowercase
-  for (int i=0; i<lines.length; i++) {
-    for (int p=0; p<allLettersLines[i].length(); p++) {
-      finalLines[i] =  finalLines[i] + allLettersLines[i].toLowerCase();
-    }
-  }  
-
+  
   //what actually runs  
   for (int i=0; i < lines.length; i++) {
-    if (palindrome(finalLines[i])==true)
+    if (palindrome(lines[i])==true)
     {
       println(lines[i] + " IS a palindrome.");
     } else
@@ -47,7 +19,10 @@ public void setup()
 public boolean palindrome(String str)
 {
   String checker = reverse(str);
-  if (checker.equals(str)) {
+  String word1 = onlyLetters(str);
+  String word2 = noSpaces(word1);
+  String word3 = noCapitals(word2);
+  if (checker.equals(word3)) {
     return true;
   } else {
     return false;
@@ -57,9 +32,38 @@ public boolean palindrome(String str)
 //reverse function-OK
 public String reverse(String word)
 {
+  String word1 = onlyLetters(word);
+  String word2 = noSpaces(word1);
+  String word3 = noCapitals(word2);
   String sNew = new String();
-  for (int i=word.length()-1; i>=0; i--) {
-    sNew = sNew + word.substring(i, i+1);
+  for (int i=word3.length()-1; i>=0; i--) {
+    sNew = sNew + word3.substring(i,i+1);
   }
   return sNew;
+}
+
+
+
+public String onlyLetters(String sString){
+  String s = new String();
+  for(int i= 0; i<sString.length();i++){
+    if(Character.isLetter(sString.charAt(i))==true){
+      s = s+sString.charAt(i);
+    }
+  }return s;
+}
+
+
+public String noSpaces(String sWord){
+  String noSpace = new String();
+  for (int i=0; i<sWord.length(); i++) {
+    if (sWord.charAt(i)!=' '){
+      noSpace = noSpace + sWord.charAt(i);
+    }
+  }return noSpace;
+}
+
+
+public String noCapitals(String sWord){
+  return sWord.toLowerCase();
 }
